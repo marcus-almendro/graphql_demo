@@ -1,0 +1,57 @@
+type Query {
+  products(onlyAvailable: Boolean, category: String): [Product!]!
+  categories: [Category!]!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price(currency: String! = "BRL"): Float!
+  quantity: Int!
+  categoryId: ID!
+  category: Category
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+type Mutation {
+  productAdd(input: ProductAdd!): MutationResponse!
+  productUpdate(input: ProductUpdate!): MutationResponse!
+  productDelete(id: ID!): MutationResponse!
+
+  categoryAdd(input: CategoryAdd!): MutationResponse!
+  categoryUpdate(input: CategoryUpdate!): MutationResponse!
+  categoryDelete(id: ID!): MutationResponse!
+}
+
+input ProductAdd {
+  name: String!
+  price: Float!
+  quantity: Int!
+  categoryId: ID!
+}
+
+input ProductUpdate {
+  id: ID!
+  name: String!
+  price: Float!
+  quantity: Int!
+  categoryId: ID!
+}
+
+input CategoryAdd {
+  name: String!
+}
+
+input CategoryUpdate {
+  id: ID!
+  name: String!
+}
+
+type MutationResponse {
+  id: ID!
+  errors: [String!]!
+}
